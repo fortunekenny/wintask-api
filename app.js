@@ -1,22 +1,45 @@
+require("dotenv").config();
+require("express-async-errors");
+
+//Express
 const express = require("express");
 const app = express();
-const tasks = require("./routes/tasks");
+
+//rest of packages
+const morgan = require("morgan");
+
+//Database
+const connectDB = require("./db/connect");
+
+//routers
+const authRouter = require("./routes/authRoutes");
 
 //middleware
+const notFoundMiddleware = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler");
+
+app.use(morgan("tiny"));
 app.use(express.json());
 
-//routes
-app.get("/hello", (req, res) => {
-  res.send("WinTask App");
+app.get("/", (req, res) => {
+  res.send("WINTASK-API");
 });
 
-app.use("/api/v1/tasks", tasks);
+app.use("/api/v1/auth", authRouter);
 
-//app.get('/api/v1/tasks')        - get all the task
-//app.post('/api/v1/tasks')       - create a new task
-//app.get('/api/v1/tasks/:id')    - get single task
-//app.patch('/api/v1/tasks/:id')  - update task
-//app.delete('/api/v1/tasks/:id') - delete task
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
-const port = 5000;
-app.listen(port, console.log(`Server is listening on port ${port}...`));
+const port = process.env.PORT || 8000;
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URL);
+    app.listen(port, () => {
+      console.log(`WINTASK-API server is listening on port ${port}...`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
