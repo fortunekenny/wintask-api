@@ -14,14 +14,18 @@ const showCurrentUser = async (req, res) => {
 const updateUser = async (req, res) => {
   res.send("update user route");
 };
-const deleteUser = async (req, res) => {
-  res.send("delete user route");
+const updateUserPassword = async (req, res) => {
+  res.send("update user password route");
 };
+// const deleteUser = async (req, res) => {
+//   res.send("delete user route");
+// };
 
 module.exports = {
   getAllUsers,
   getSingleUser,
   showCurrentUser,
   updateUser,
-  deleteUser,
+  updateUserPassword,
+  //   deleteUser,
 };
