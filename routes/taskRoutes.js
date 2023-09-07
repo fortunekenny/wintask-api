@@ -15,13 +15,20 @@ const {
 
 router
   .route("/")
-  .post([authenticateUser, authorizePermissions("founder")], createTask)
-  .get([authenticateUser, authorizePermissions("founder")], getAllTasks);
+  .post([authenticateUser, authorizePermissions("user", "founder")], createTask)
+  .get(
+    [authenticateUser, authorizePermissions("user", "founder")],
+    getAllTasks
+  );
 
 router
   .route("/:id")
-  .get(authenticateUser, authorizePermissions("founder"), getTask)
-  .patch(authenticateUser, authorizePermissions("founder"), updateTask)
-  .delete(authenticateUser, authorizePermissions("founder"), deleteTask);
+  .get(authenticateUser, authorizePermissions("user", "founder"), getTask)
+  .patch(authenticateUser, authorizePermissions("user", "founder"), updateTask)
+  .delete(
+    authenticateUser,
+    authorizePermissions("user", "founder"),
+    deleteTask
+  );
 
 module.exports = router;

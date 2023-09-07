@@ -1,7 +1,7 @@
 const User = require("../model/user");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
-const user = require("../model/user");
+// const user = require("../model/user");
 const {
   attachCookiesToResponse,
   createTokenUser,
