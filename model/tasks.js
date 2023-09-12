@@ -9,18 +9,20 @@ const TaskSchema = new mongoose.Schema(
       required: [true, "Please enter your task title"],
     },
     alarmHour: {
-      type: Date,
+      type: Number,
       required: [true, "Please enter the alarm hour(s)"],
-      default: Date.now(),
-      //   min: 0,
-      //   max: 23,
+      min: 0,
+      max: 23,
     },
     alarmMinute: {
-      type: Date,
+      type: Number,
       required: [true, "Please enter the alarm minute(s)"],
-      default: Date.now(),
-      //   min: 0,
-      //   max: 59,
+      min: 0,
+      max: 59,
+    },
+    remaining: {
+      type: Number,
+      default: 0,
     },
     user: {
       type: mongoose.Types.ObjectId,
@@ -38,7 +40,7 @@ const TaskSchema = new mongoose.Schema(
     },
     repeat: {
       type: String,
-      enum: ["hourly", "daily", "none"],
+      enum: ["hourly", "daily", "none", "once"],
       default: "none",
     },
   },

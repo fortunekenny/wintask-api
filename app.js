@@ -1,8 +1,6 @@
 require("dotenv").config();
 require("express-async-errors");
 
-// process.env.TZ = "Africa/Lagos";
-
 //Express
 const express = require("express");
 const app = express();
@@ -10,6 +8,7 @@ const app = express();
 //rest of packages
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
+// const crossEnv = require("cross-env");
 
 //Database
 const connectDB = require("./db/connect");
@@ -18,6 +17,7 @@ const connectDB = require("./db/connect");
 const authRouter = require("./routes/authRoutes");
 const userRouter = require("./routes/userRoutes");
 const taskRouter = require("./routes/taskRoutes");
+process.env.TZ = "Africa/Lagos";
 
 //middleware
 const notFoundMiddleware = require("./middleware/not-found");
@@ -26,6 +26,7 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
+// app.use(crossEnv());
 
 app.get("/", (req, res) => {
   res.send("WINTASK-API");
