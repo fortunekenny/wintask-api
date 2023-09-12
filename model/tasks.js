@@ -14,12 +14,26 @@ const TaskSchema = new mongoose.Schema(
       min: 0,
       max: 23,
     },
+    // alarmHour: {
+    //   type: Date,
+    //   required: [true, "Please enter the alarm hour(s)"],
+    //   default: Date.now,
+    //   // min: 0,
+    //   // max: 23,
+    // },
     alarmMinute: {
       type: Number,
       required: [true, "Please enter the alarm minute(s)"],
       min: 0,
       max: 59,
     },
+    // alarmMinute: {
+    //   type: Date,
+    //   required: [true, "Please enter the alarm minute(s)"],
+    //   default: Date.now,
+    //   // min: 0,
+    //   // max: 59,
+    // },
     remaining: {
       type: Number,
       default: 0,
@@ -49,6 +63,10 @@ const TaskSchema = new mongoose.Schema(
 
 // TaskSchema.pre("save", async function () {
 //   this.alarmHour = await this.alarmHour.getHours();
+// });
+
+// TaskSchema.pre("save", async function () {
+//   this.alarmHour = await this.alarmMinute.getMinutes();
 // });
 
 module.exports = mongoose.model("Task", TaskSchema);
