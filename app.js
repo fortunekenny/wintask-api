@@ -17,7 +17,7 @@ const connectDB = require("./db/connect");
 const authRouter = require("./routes/authRoutes");
 const userRouter = require("./routes/userRoutes");
 const taskRouter = require("./routes/taskRoutes");
-process.env.TZ = "Africa/Lagos";
+// process.env.TZ = "Africa/Lagos";
 
 //middleware
 const notFoundMiddleware = require("./middleware/not-found");

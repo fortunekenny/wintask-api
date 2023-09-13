@@ -4,19 +4,6 @@ const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 
 /*
-const timeNow = new Date();
-const year = timeNow.getFullYear();
-const month = timeNow.getMonth() + 1;
-const day = timeNow.getDate();
-const seconds = timeNow.getSeconds();
-let hour = 17;
-let minutes = 40;
-// hour = hour < 10 ? `0${hour}` : hour;
-// minutes = minutes < 10 ? `0${minutes}` : minutes;
-const futureTime = new Date(
-  `${year}/${month}/${day}-${hour}:${minutes}:${seconds}:10`
-);
-
 const remainingTime = () => {
   const timesNow = new Date();
   const remainingTime = futureTime.getTime() - timesNow.getTime();
@@ -49,38 +36,40 @@ remainingTime();
 */
 
 const createTask = async (req, res) => {
-  req.body.user = req.user.userId;
-  const { title, alarmHour, alarmMinute } = req.body;
+  let { title, alarmHour, alarmMinute } = req.body;
 
   const currentTime = new Date();
   console.log(currentTime);
 
   alarmHour = alarmHour < 10 ? `0${alarmHour}` : alarmHour;
   alarmMinute = alarmMinute < 10 ? `0${alarmMinute}` : alarmMinute;
+
+  const timeNow = new Date();
+  const year = timeNow.getFullYear();
+  const month = timeNow.getMonth() + 1;
+  const day = timeNow.getDate();
+  const seconds = timeNow.getSeconds();
   const futureTime = new Date(
     `${year}/${month}/${day}-${alarmHour}:${alarmMinute}:${seconds}:10`
   );
-  console.log(futureTime);
-
-  // const oneHour = 60 * 60 * 1000;
-  // const oneMinute = 60 * 1000;
-
-  // const addedHour = oneHour * 3;
-  // const addedMinute = oneMinute * 30;
-
-  // const futureTime = new Date().getTime() + addedHour + addedMinute;
   // console.log(futureTime);
 
-  // const remainingTime = futureTime - currentTime;
-  // console.log(remainingTime);
+  if (futureTime < currentTime) {
+    throw new CustomError.BadRequestError(
+      "Alarm time is bellow current time, please reset time"
+    );
+  }
 
-  // const remainingHours = Math.floor(remainingTime / oneHour);
-  // console.log(remainingHours);
+  const remainingTime = futureTime - currentTime;
+  console.log(remainingTime);
 
-  // const remainingMinutes = Math.floor((remainingTime % oneHour) / oneMinute);
-  // console.log(remainingMinutes);
-
-  const task = await Task.create(req.body);
+  req.body.user = req.user.userId;
+  const task = await Task.create({
+    title,
+    alarmHour,
+    alarmMinute,
+    remainingTime,
+  });
   res.status(StatusCodes.CREATED).json({ task });
 };
 
@@ -155,3 +144,21 @@ module.exports = { createTask, getAllTasks, getTask, updateTask, deleteTask };
 
 // const remainingTime = futureTime.getTime() - timeNow.getTime();
 // console.log(remainingTime);
+
+// const oneHour = 60 * 60 * 1000;
+// const oneMinute = 60 * 1000;
+
+// const addedHour = oneHour * 3;
+// const addedMinute = oneMinute * 30;
+
+// const futureTime = new Date().getTime() + addedHour + addedMinute;
+// console.log(futureTime);
+
+// const remainingTime = futureTime - currentTime;
+// console.log(remainingTime);
+
+// const remainingHours = Math.floor(remainingTime / oneHour);
+// console.log(remainingHours);
+
+// const remainingMinutes = Math.floor((remainingTime % oneHour) / oneMinute);
+// console.log(remainingMinutes);
