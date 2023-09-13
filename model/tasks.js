@@ -14,27 +14,13 @@ const TaskSchema = new mongoose.Schema(
       min: 0,
       max: 23,
     },
-    // alarmHour: {
-    //   type: Date,
-    //   required: [true, "Please enter the alarm hour(s)"],
-    //   default: Date.now,
-    //   // min: 0,
-    //   // max: 23,
-    // },
     alarmMinute: {
       type: Number,
       required: [true, "Please enter the alarm minute(s)"],
       min: 0,
       max: 59,
     },
-    // alarmMinute: {
-    //   type: Date,
-    //   required: [true, "Please enter the alarm minute(s)"],
-    //   default: Date.now,
-    //   // min: 0,
-    //   // max: 59,
-    // },
-    remaining: {
+    remainingTime: {
       type: Number,
       default: 0,
     },
