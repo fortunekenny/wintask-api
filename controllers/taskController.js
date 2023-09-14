@@ -39,7 +39,7 @@ const createTask = async (req, res) => {
   let { title, alarmHour, alarmMinute } = req.body;
 
   const currentTime = new Date();
-  console.log(currentTime);
+  // console.log(currentTime);
 
   alarmHour = alarmHour < 10 ? `0${alarmHour}` : alarmHour;
   alarmMinute = alarmMinute < 10 ? `0${alarmMinute}` : alarmMinute;
@@ -52,7 +52,6 @@ const createTask = async (req, res) => {
   const futureTime = new Date(
     `${year}/${month}/${day}-${alarmHour}:${alarmMinute}:${seconds}:10`
   );
-  // console.log(futureTime);
 
   if (futureTime < currentTime) {
     throw new CustomError.BadRequestError(
@@ -61,9 +60,7 @@ const createTask = async (req, res) => {
   }
 
   const remainingTime = futureTime - currentTime;
-  console.log(remainingTime);
 
-  // const task = await Task.create(req.body);
   const task = await Task.create({
     title,
     alarmHour,
@@ -74,8 +71,13 @@ const createTask = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ task });
 };
 
-const getAllTasks = (req, res) => {
-  res.send("get all tasks");
+const getAllTasks = async (req, res) => {
+  const tasks = await Task.find({});
+  res.status(StatusCodes.OK).json({ tasks, count: tasks.length });
+};
+
+const getUserTasks = async (req, res) => {
+  res.send("user tasks");
 };
 
 const getTask = (req, res) => {
@@ -94,7 +96,14 @@ const deleteTask = (req, res) => {
 //   res.send("all tasks");
 // };
 
-module.exports = { createTask, getAllTasks, getTask, updateTask, deleteTask };
+module.exports = {
+  createTask,
+  getAllTasks,
+  getUserTasks,
+  getTask,
+  updateTask,
+  deleteTask,
+};
 
 // process.env.TZ = "Africa/Lagos";
 // const timeNow = new Date().toLocaleString("en-US", {

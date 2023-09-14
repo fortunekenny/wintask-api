@@ -8,6 +8,7 @@ const {
 const {
   createTask,
   getAllTasks,
+  getUserTasks,
   getTask,
   updateTask,
   deleteTask,
@@ -16,9 +17,13 @@ const {
 router
   .route("/")
   .post(authenticateUser, authorizePermissions("user", "founder"), createTask)
+  .get([authenticateUser, authorizePermissions("founder")], getAllTasks);
+
+router
+  .route("/usertasks")
   .get(
     [authenticateUser, authorizePermissions("user", "founder")],
-    getAllTasks
+    getUserTasks
   );
 
 router
