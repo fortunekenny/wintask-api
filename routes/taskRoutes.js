@@ -15,7 +15,7 @@ const {
 
 router
   .route("/")
-  .post([authenticateUser, authorizePermissions("user", "founder")], createTask)
+  .post(authenticateUser, authorizePermissions("user", "founder"), createTask)
   .get(
     [authenticateUser, authorizePermissions("user", "founder")],
     getAllTasks

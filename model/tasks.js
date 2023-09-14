@@ -20,6 +20,10 @@ const TaskSchema = new mongoose.Schema(
       min: 0,
       max: 59,
     },
+    timeCreated: {
+      type: Date,
+      default: Date.now,
+    },
     remainingTime: {
       type: Number,
       default: 0,
@@ -27,6 +31,7 @@ const TaskSchema = new mongoose.Schema(
     user: {
       type: mongoose.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     completed: {
       type: Boolean,

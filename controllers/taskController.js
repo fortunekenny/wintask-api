@@ -1,4 +1,3 @@
-// const User = require("../model/user");
 const Task = require("../model/tasks");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
@@ -36,6 +35,7 @@ remainingTime();
 */
 
 const createTask = async (req, res) => {
+  // req.body.user = req.user.userId;
   let { title, alarmHour, alarmMinute } = req.body;
 
   const currentTime = new Date();
@@ -63,12 +63,13 @@ const createTask = async (req, res) => {
   const remainingTime = futureTime - currentTime;
   console.log(remainingTime);
 
-  req.body.user = req.user.userId;
+  // const task = await Task.create(req.body);
   const task = await Task.create({
     title,
     alarmHour,
     alarmMinute,
     remainingTime,
+    user: req.user.userId,
   });
   res.status(StatusCodes.CREATED).json({ task });
 };
