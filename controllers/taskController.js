@@ -77,19 +77,48 @@ const getAllTasks = async (req, res) => {
 };
 
 const getUserTasks = async (req, res) => {
-  res.send("user tasks");
+  const tasks = await Task.find({ user: req.user.userId });
+  res.status(StatusCodes.OK).json({ tasks });
 };
 
-const getTask = (req, res) => {
-  res.send("get task");
+const getTask = async (req, res) => {
+  const { id: taskId } = req.params;
+
+  const task = await Task.findOne({ _id: taskId });
+
+  if (!task) {
+    throw new CustomError.NotFoundError(`No task with id: ${taskId}`);
+  }
+
+  res.status(StatusCodes.OK).json({ task });
 };
 
-const updateTask = (req, res) => {
-  res.send("task updated");
+const updateTask = async (req, res) => {
+  const { id: taskId } = req.params;
+
+  const task = await Task.findOneAndUpdate({ _id: taskId }, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!task) {
+    throw new CustomError.NotFoundError(`No task with id: ${taskId}`);
+  }
+
+  res.status(StatusCodes.OK).json({ task });
 };
 
-const deleteTask = (req, res) => {
-  res.send("task deleted");
+const deleteTask = async (req, res) => {
+  const { id: taskId } = req.params;
+  const task = await Task.findOne({ _id: taskId });
+
+  if (!task) {
+    throw new CustomError.NotFoundError(`No task with id: ${taskId}`);
+  }
+
+  await task.deleteOne();
+
+  res.status(StatusCodes.OK).json({ msg: "Success! Task deleted" });
 };
 
 // const getAllTasks = (req, res) => {
