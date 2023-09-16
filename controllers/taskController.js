@@ -1,6 +1,7 @@
 const Task = require("../model/tasks");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
+const { checkPermissions } = require("../utils");
 
 /*
 const remainingTime = () => {
@@ -35,11 +36,9 @@ remainingTime();
 */
 
 const createTask = async (req, res) => {
-  // req.body.user = req.user.userId;
   let { title, alarmHour, alarmMinute } = req.body;
 
   const currentTime = new Date();
-  // console.log(currentTime);
 
   alarmHour = alarmHour < 10 ? `0${alarmHour}` : alarmHour;
   alarmMinute = alarmMinute < 10 ? `0${alarmMinute}` : alarmMinute;
@@ -90,6 +89,8 @@ const getTask = async (req, res) => {
     throw new CustomError.NotFoundError(`No task with id: ${taskId}`);
   }
 
+  checkPermissions(req.user, task.user);
+
   res.status(StatusCodes.OK).json({ task });
 };
 
@@ -105,6 +106,8 @@ const updateTask = async (req, res) => {
     throw new CustomError.NotFoundError(`No task with id: ${taskId}`);
   }
 
+  checkPermissions(req.user, task.user);
+
   res.status(StatusCodes.OK).json({ task });
 };
 
@@ -116,14 +119,12 @@ const deleteTask = async (req, res) => {
     throw new CustomError.NotFoundError(`No task with id: ${taskId}`);
   }
 
+  checkPermissions(req.user, task.user);
+
   await task.deleteOne();
 
   res.status(StatusCodes.OK).json({ msg: "Success! Task deleted" });
 };
-
-// const getAllTasks = (req, res) => {
-//   res.send("all tasks");
-// };
 
 module.exports = {
   createTask,

@@ -51,6 +51,8 @@ const TaskSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+module.exports = mongoose.model("Task", TaskSchema);
+
 // TaskSchema.pre("save", async function () {
 //   this.alarmHour = await this.alarmHour.getHours();
 // });
@@ -58,5 +60,3 @@ const TaskSchema = new mongoose.Schema(
 // TaskSchema.pre("save", async function () {
 //   this.alarmHour = await this.alarmMinute.getMinutes();
 // });
-
-module.exports = mongoose.model("Task", TaskSchema);
