@@ -8,7 +8,11 @@ const app = express();
 //rest of packages
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-// const crossEnv = require("cross-env");
+const rateLimiter = require("express-rate-limit");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const cors = require("cors");
+const mongoSanitize = require("express-mongo-sanitize");
 
 //Database
 const connectDB = require("./db/connect");
@@ -23,9 +27,22 @@ const taskRouter = require("./routes/taskRoutes");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
+app.set("trust proxy", 1);
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 60,
+  })
+);
+app.use(helmet());
+app.use(cors());
+app.use(xss());
+app.use(mongoSanitize());
+
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
+
 app.use(express.static("public"));
 
 // app.use(crossEnv());
