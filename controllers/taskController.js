@@ -3,13 +3,6 @@ const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const { checkPermissions } = require("../utils");
 
-// let bee;
-// const rename = () => {
-//   bee = "ken";
-// };
-// rename();
-// console.log(bee);
-
 const createTask = async (req, res) => {
   let { title, alarmHour, alarmMinute } = req.body;
 
@@ -33,31 +26,7 @@ const createTask = async (req, res) => {
     );
   }
 
-  let remainingTime;
-  let remainingHours;
-  let remainingMinutes;
-  let remainingSeconds;
-
-  const timeRemaining = () => {
-    const timesNow = new Date();
-    remainingTime = futureTime.getTime() - timesNow.getTime();
-    const oneHour = 60 * 60 * 1000;
-    const oneMinute = 60 * 1000;
-
-    remainingHours = Math.floor(remainingTime / oneHour);
-    remainingMinutes = Math.floor((remainingTime % oneHour) / oneMinute);
-    remainingSeconds = Math.floor((remainingTime % oneMinute) / 1000);
-
-    if (remainingTime < 1000) {
-      clearInterval(countDown);
-    }
-
-    return;
-  };
-
-  let countDown = setInterval(timeRemaining, 1000);
-
-  timeRemaining();
+  const remainingTime = futureTime - currentTime;
 
   const task = await Task.create({
     title,
@@ -65,10 +34,6 @@ const createTask = async (req, res) => {
     alarmMinute,
     remainingTime,
     user: req.user.userId,
-    remainingTime,
-    remainingHours,
-    remainingMinutes,
-    remainingSeconds,
   });
   res.status(StatusCodes.CREATED).json({ task });
 };
