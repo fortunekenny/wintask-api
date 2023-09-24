@@ -28,6 +28,18 @@ const TaskSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    remainingHours: {
+      type: Number,
+      default: 0,
+    },
+    remainingMinutes: {
+      type: Number,
+      default: 0,
+    },
+    remainingSeconds: {
+      type: Number,
+      default: 0,
+    },
     user: {
       type: mongoose.Types.ObjectId,
       ref: "User",
