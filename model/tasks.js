@@ -37,9 +37,13 @@ const TaskSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    cancel: {
+      type: Boolean,
+      default: false,
+    },
     status: {
       type: String,
-      enum: ["active", "inactive", "cancelled"],
+      enum: ["active", "inactive"],
       default: "inactive",
     },
     repeat: {
