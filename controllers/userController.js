@@ -1,7 +1,7 @@
 const User = require("../model/user");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
-// const user = require("../model/user");
+
 const {
   attachCookiesToResponse,
   createTokenUser,
@@ -9,7 +9,6 @@ const {
 } = require("../utils");
 
 const getAllUsers = async (req, res) => {
-  //   console.log(req.user);
   const users = await User.find({ role: "user" }).select("-password");
   res.status(StatusCodes.OK).json({ users });
 };
@@ -72,7 +71,6 @@ module.exports = {
   showCurrentUser,
   updateUser,
   updateUserPassword,
-  //   deleteUser,
 };
 
 /* UPDATE USER WITH findOneAndUpdate */

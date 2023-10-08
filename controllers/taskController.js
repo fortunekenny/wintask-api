@@ -8,8 +8,8 @@ const createTask = async (req, res) => {
 
   const currentTime = new Date();
 
-  alarmHour = alarmHour < 10 ? `0${alarmHour}` : alarmHour;
-  alarmMinute = alarmMinute < 10 ? `0${alarmMinute}` : alarmMinute;
+  // alarmHour = alarmHour < 10 ? `0${alarmHour}` : alarmHour;
+  // alarmMinute = alarmMinute < 10 ? `0${alarmMinute}` : alarmMinute;
 
   const timeNow = new Date();
   const year = timeNow.getFullYear();

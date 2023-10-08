@@ -11,7 +11,6 @@ const {
   showCurrentUser,
   updateUser,
   updateUserPassword,
-  //   deleteUser,
 } = require("../controllers/userController");
 
 router

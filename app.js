@@ -6,7 +6,6 @@ const express = require("express");
 const app = express();
 
 //rest of packages
-const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const rateLimiter = require("express-rate-limit");
 const helmet = require("helmet");
@@ -21,7 +20,6 @@ const connectDB = require("./db/connect");
 const authRouter = require("./routes/authRoutes");
 const userRouter = require("./routes/userRoutes");
 const taskRouter = require("./routes/taskRoutes");
-// process.env.TZ = "Africa/Lagos";
 
 //middleware
 const notFoundMiddleware = require("./middleware/not-found");

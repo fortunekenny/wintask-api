@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-// process.env.TZ = "Africa/Lagos";
-
 const TaskSchema = new mongoose.Schema(
   {
     title: {
@@ -56,11 +54,3 @@ const TaskSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Task", TaskSchema);
-
-// TaskSchema.pre("save", async function () {
-//   this.alarmHour = await this.alarmHour.getHours();
-// });
-
-// TaskSchema.pre("save", async function () {
-//   this.alarmHour = await this.alarmMinute.getMinutes();
-// });
