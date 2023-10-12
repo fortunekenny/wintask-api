@@ -20,7 +20,9 @@ const getSingleUser = async (req, res) => {
   checkPermissions(req.user, user._id);
   res.status(StatusCodes.OK).json({ user });
 };
+
 const showCurrentUser = async (req, res) => {
+  const user = await User.findOne({ _id: req.user.userId });
   res.status(StatusCodes.OK).json({ user: req.user });
 };
 
