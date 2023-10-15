@@ -38,7 +38,9 @@ app.use(
 );
 
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({ origin: "https://wintask-api.onrender.com/", credentials: true })
+);
 app.use(xss());
 app.use(mongoSanitize());
 
