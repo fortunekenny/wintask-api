@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js",
-    "dev": "cross-env TZ=Africa/Lagos node index.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
