@@ -27,8 +27,6 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 
 //IMPORTING ENDS
 
-app.use(express.json());
-
 app.set("trust proxy", 1);
 app.use(
   rateLimiter({
@@ -42,9 +40,10 @@ app.use(cors());
 app.use(xss());
 app.use(mongoSanitize());
 
+app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 
-app.use(express.static("public"));
+app.use(express.static("./public"));
 
 // app.get("/api/v1", (req, res) => {
 //   console.log(req.signedCookies);
