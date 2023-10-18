@@ -14,13 +14,23 @@ const attachCookiesToResponse = ({ res, user }) => {
 
   const oneDay = 1000 * 60 * 60 * 24;
 
-  res.cookie("token", token, {
-    httpOnly: true,
-    path: `/`,
-    expires: new Date(Date.now() + oneDay),
-    secure: process.env.NODE_ENV === "production",
-    signed: true,
-  });
+  res
+    .cookie("token", token, {
+      sameSite: "lax",
+      httpOnly: false,
+      secure: false,
+      maxAge: 60 * 60 * 24 * 7,
+    })
+    .status(200)
+    .json({ success: true });
+
+  // res.cookie("token", token, {
+  //   httpOnly: true,
+  //   path: `/`,
+  //   expires: new Date(Date.now() + oneDay),
+  //   secure: process.env.NODE_ENV === "production",
+  //   signed: true,
+  // });
 };
 
 module.exports = {
