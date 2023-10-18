@@ -53,5 +53,3 @@ module.exports = {
   login,
   logout,
 };
-
-//not yet uploaded to git
