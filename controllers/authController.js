@@ -37,7 +37,10 @@ const login = async (req, res) => {
   const tokenUser = createTokenUser(user);
   attachCookiesToResponse({ res, user: tokenUser });
   // res.status(StatusCodes.OK).json({ user: tokenUser });
-  res.status(StatusCodes.OK).json({ tokenUser });
+  // res.status(StatusCodes.OK).json({ tokenUser });
+  res
+    .status(StatusCodes.OK)
+    .json({ name: user.name, userId: user._id, role: user.role });
 };
 
 const logout = async (req, res) => {
